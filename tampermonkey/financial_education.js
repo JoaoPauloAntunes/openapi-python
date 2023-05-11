@@ -35,7 +35,7 @@
     }
 
 
-    // Obtém a chave de API
+    // Obter a chave de API
     const apiKey = await getAPIKey();
 
     // Prompt para gerar o artigo
