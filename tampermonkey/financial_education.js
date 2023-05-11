@@ -6,18 +6,18 @@
 // @grant        none
 // ==/UserScript==
 
-(function () {
+(async () => {
     'use strict';
 
-    // Obter a chave de API
     const getAPIKey = async () => {
+        // Obter a chave de API
         const res = await fetch("http://127.0.0.1:2334/OPENAI_API_KEY");
         const data = await res.json();
         return data.data.OPENAI_API_KEY;
     }
 
-    // Gerar resposta do GPT-3
     const generateResponse = async (apiKey, prompt, model_engine, max_tokens, temperature) => {
+        // Gerar resposta do GPT-3
         const response = await fetch(`https://api.openai.com/v1/engines/${model_engine}/completions`, {
             method: 'POST',
             headers: {
@@ -34,26 +34,19 @@
         return data.choices[0].text;
     }
 
-    (async () => {
-        // Define a chave de API
-        let apiKey = null;
-        try {
-            apiKey = await getAPIKey();
-            // console.log('apiKey:', apiKey);
-        } catch (e) {
-            console.log('Error:', e);
-        }
 
-        // Prompt para gerar o artigo
-        const prompt = "escreva um artigo de blog falando sobre educação financeira";
-        console.log("prompt: ", prompt);
+    // Obtém a chave de API
+    const apiKey = await getAPIKey();
 
-        // Parâmetros para GPT-3
-        const model_engine = "text-davinci-002";
-        const max_tokens = 1024;
-        const temperature = 0.5;
+    // Prompt para gerar o artigo
+    const prompt = "escreva um artigo de blog falando sobre educação financeira";
+    console.log("prompt: ", prompt);
 
-        const res = await generateResponse(apiKey, prompt, model_engine, max_tokens, temperature);
-        console.log(res);
-    })();
+    // Parâmetros para GPT-3
+    const model_engine = "text-davinci-002";
+    const max_tokens = 1024;
+    const temperature = 0.5;
+
+    const res = await generateResponse(apiKey, prompt, model_engine, max_tokens, temperature);
+    console.log(res);
 })();
