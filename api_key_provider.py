@@ -54,7 +54,7 @@ async def root() -> RedirectResponse:
 
 
 @app.get("/OPENAI_API_KEY")
-async def root() -> ResponseModel:
+async def get_openai_api_key() -> ResponseModel:
     return ResponseModel(data={
         'OPENAI_API_KEY': os.environ['OPENAI_API_KEY']
     })
